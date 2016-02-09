@@ -1,8 +1,12 @@
-#Extracting numerical stability values from SHEMAT logfile.log (Courant, Neumann and Peclet)
-#Variables to consider
+# Extracting numerical stability values from SHEMAT logfile.log (Courant, Neumann and Peclet)
+#
+# To use:
+	# bash extractSHEMATaccterms.sh logfile.log
+# Variables to consider
 	# $1 -> directory of logfile
 
 # solution taken from $sh-to-extract-numbers-and-convert-to-csv-file
+# Produces three CSVs (Courant, Neumann and Peclet) with data for 9 columns (Min_x,y,z, Avg_x,y,z, Max_x,y,z)
 
 echo 'Extracting Courant values to text file'
 grep -A 3 'Courant-Number in x,y,z' $1 | #find courant number + 3 lines
