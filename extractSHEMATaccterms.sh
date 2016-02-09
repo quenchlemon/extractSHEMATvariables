@@ -6,7 +6,7 @@
 	# $1 -> directory of logfile
 
 # solution taken from $sh-to-extract-numbers-and-convert-to-csv-file
-# Produces three CSVs (Courant, Neumann and Peclet) with data for 9 columns (Min_x,y,z, Avg_x,y,z, Max_x,y,z)
+# Produces three CSVs (Courant, Neumann and Peclet) with data for 9 columns (Max_x,y,z, Min_x,y,z, Avg_x,y,z)
 
 echo 'Extracting Courant values to text file'
 grep -A 3 'Courant-Number in x,y,z' $1 | #find courant number + 3 lines
@@ -34,6 +34,15 @@ grep -A 3 'Temperature-Peclet-Number in x,y,z' $1 |
         paste -d "," - - - | # join every three lines with commas
         sed 's/ *//g' > peclet.csv # get rid of whitespace and write to 
 file
+
+echo 'Add header lines for csv'
+
+sed -i.bak 1i"Max_x,Max_y,Max_z,Min_x,Min_y,Min_z,Avg_x,Avg_y,Avg_z" courant.csv
+sed -i.bak 1i"Max_x,Max_y,Max_z,Min_x,Min_y,Min_z,Avg_x,Avg_y,Avg_z" neumann.csv
+sed -i.bak 1i"Max_x,Max_y,Max_z,Min_x,Min_y,Min_z,Avg_x,Avg_y,Avg_z" peclet.csv
+
+echo 'Removing extra files' # above commands replaces original files with .bak extension
+rm *.bak
 
 echo 'Done'
 
